@@ -20,12 +20,13 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- GSAP & ScrollTrigger -->
+    <!-- GSAP & ScrollTrigger & CustomEase -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/CustomEase.min.js"></script>
 
     <!-- Lenis for Smooth Scrolling -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -47,13 +48,18 @@
     </script>
 
     <style>
+        /* Prevent overscroll bounce fighting Lenis */
+        html, body {
+            overscroll-behavior: none;
+        }
+
         /* Lenis Recommended Styles */
-        html.lenis {
+        html.lenis, html.lenis body {
             height: auto;
         }
 
         .lenis.lenis-smooth {
-            scroll-behavior: auto;
+            scroll-behavior: auto !important;
         }
 
         .lenis.lenis-smooth [data-lenis-prevent] {
@@ -72,6 +78,18 @@
             background-color: theme('colors.base');
             color: theme('colors.dark');
             overflow-x: hidden;
+        }
+
+        /* GPU promotion for animated elements */
+        .gsap-fade-up, .gsap-modal-fade-up, .stagger-item, [data-parallax], [data-reveal], [data-scroll-reveal], [data-animate] {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Prevent text blur during GPU promotion */
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Custom Button Gradients/Shadows */
@@ -1869,44 +1887,61 @@
 
     <!-- Scripts for Initialization -->
     <script>
+        gsap.registerPlugin(ScrollTrigger, CustomEase);
+        CustomEase.create("premiumOut", "0.16, 1, 0.3, 1");
+
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // 1. Initialize Lenis (Smooth Scrolling)
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-            infinite: false,
-        })
+        let lenis;
+        if (!prefersReducedMotion) {
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                orientation: 'vertical',
+                gestureOrientation: 'vertical',
+                smoothWheel: true,
+                wheelMultiplier: 1,
+                touchMultiplier: 1.5,
+                infinite: false,
+            });
 
-        // 2. Synchronize Lenis with GSAP ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update)
+            lenis.on('scroll', ScrollTrigger.update);
 
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000)
-        })
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
 
-        gsap.ticker.lagSmoothing(0)
+            gsap.ticker.lagSmoothing(0);
+        }
 
-        // 3. Initialize GSAP Animations
+        // 2. Initialize GSAP Animations
         document.addEventListener("DOMContentLoaded", (event) => {
-            gsap.registerPlugin(ScrollTrigger);
+            if (prefersReducedMotion) {
+                // Kill all GSAP animations for accessibility
+                gsap.set('.gsap-fade-up, .stagger-item, .gsap-modal-fade-up, [data-scroll-reveal]', { opacity: 1, y: 0, x: 0 });
+                return;
+            }
+
+            if (isMobile) {
+                gsap.defaults({ duration: 0.5, ease: 'power2.out' });
+            }
 
             // Simple fade up animation for headers and text blocks
-            gsap.utils.toArray('.gsap-fade-up').forEach(elem => {
+            gsap.utils.toArray('.gsap-fade-up, [data-scroll-reveal]').forEach(elem => {
                 gsap.fromTo(elem,
-                    { y: 60, opacity: 0 },
+                    { y: isMobile ? 30 : 50, opacity: 0 },
                     {
                         y: 0, opacity: 1,
-                        duration: 1,
-                        ease: "power3.out",
+                        duration: isMobile ? 0.7 : 0.9,
+                        ease: "premiumOut",
                         scrollTrigger: {
                             trigger: elem,
-                            start: "top 85%",
-                        }
+                            start: isMobile ? "top 90%" : "top 85%",
+                            toggleActions: 'play none none none',
+                        },
+                        onComplete: () => elem.style.willChange = 'auto'
                     }
                 );
             });
@@ -1915,40 +1950,71 @@
             gsap.utils.toArray('.stagger-grid').forEach(grid => {
                 const items = grid.querySelectorAll('.stagger-item');
                 gsap.fromTo(items,
-                    { y: 60, opacity: 0 },
+                    { y: isMobile ? 30 : 50, opacity: 0 },
                     {
                         y: 0, opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out",
+                        duration: isMobile ? 0.7 : 0.8,
+                        stagger: isMobile ? 0.05 : 0.1,
+                        ease: "premiumOut",
                         scrollTrigger: {
                             trigger: grid,
-                            start: "top 80%",
+                            start: isMobile ? "top 90%" : "top 80%",
+                            toggleActions: 'play none none none',
+                        },
+                        onComplete: () => {
+                            items.forEach(el => el.style.willChange = 'auto');
                         }
                     }
                 );
             });
+
+            // Parallax Depth
+            gsap.utils.toArray('[data-parallax]').forEach(el => {
+                const speed = parseFloat(el.dataset.parallax) || 0.15;
+                const adjustedSpeed = isMobile ? speed * 0.5 : speed;
+                gsap.to(el, {
+                    yPercent: -30 * adjustedSpeed,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true,
+                    },
+                    onComplete: () => el.style.willChange = 'auto'
+                });
+            });
         });
+
+        // 3. Image Optimization & Refresh
+        window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
+        }, { passive: true });
 
         // Portfolio Modal Logic
         function openPortfolioModal() {
             const modal = document.getElementById('portfolioModal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('opacity-100', 'pointer-events-auto');
-            document.body.style.overflow = 'hidden'; // Prevent background native scroll
+            document.body.style.overflow = 'hidden'; 
 
-            // Trigger animations inside modal
-            gsap.fromTo('.gsap-modal-fade-up',
-                { y: 40, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: 0.2 }
-            );
+            if (!prefersReducedMotion) {
+                gsap.fromTo('.gsap-modal-fade-up',
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "premiumOut", delay: 0.2, onComplete: function() {
+                        this.targets().forEach(t => t.style.willChange = 'auto');
+                    }}
+                );
+            } else {
+                gsap.set('.gsap-modal-fade-up', { y: 0, opacity: 1 });
+            }
         }
 
         function closePortfolioModal() {
             const modal = document.getElementById('portfolioModal');
             modal.classList.remove('opacity-100', 'pointer-events-auto');
             modal.classList.add('opacity-0', 'pointer-events-none');
-            document.body.style.overflow = ''; // Resume background native scroll
+            document.body.style.overflow = ''; 
         }
     </script>
 </body>
