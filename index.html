@@ -243,6 +243,15 @@
 
         /* --- Small screens (max-width: 767px) --- */
         @media (max-width: 767px) {
+            
+            /* Aggressive Mobile GPU Fixes */
+            .bg-noise {
+                display: none !important;
+            }
+            .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
 
             /* --- NAVBAR --- */
             nav {
@@ -684,7 +693,7 @@
                         class="bg-[#1A3BFF] mx-2 mb-2 mt-4 rounded-full p-2 pr-4 flex items-center justify-between cursor-pointer hover:bg-blue-700 transition-colors relative z-10 shadow-lg">
                         <div class="flex items-center gap-3">
                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop"
-                                class="w-10 h-10 rounded-full border-2 border-[#1A3BFF] object-cover" alt="Avatar">
+                                class="w-10 h-10 rounded-full border-2 border-[#1A3BFF] object-cover" alt="Avatar" loading="lazy" decoding="async" width="800" height="800">
                             <div class="-space-y-0.5">
                                 <p class="text-white text-[13px] font-bold leading-tight">Book a 15-min intro call</p>
                                 <p class="text-white/70 text-[11px] font-medium">Schedule now</p>
@@ -711,7 +720,7 @@
                     class="rounded-[2rem] overflow-hidden text-left stagger-item bg-[#FFC107] text-dark shadow-sm border border-borderline">
                     <div class="h-64 w-full bg-black relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop"
-                            class="w-full h-full object-cover opacity-60 mix-blend-luminosity" alt="Design app">
+                            class="w-full h-full object-cover opacity-60 mix-blend-luminosity" alt="Design app" loading="lazy" decoding="async" width="800" height="800">
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center p-6">
                             <!-- Mock UI element inside image -->
@@ -763,7 +772,7 @@
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-3/4 h-[120%] bg-white rounded-xl shadow-2xl rotate-12 p-2">
                                 <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=800&auto=format&fit=crop"
-                                    class="w-full h-full object-cover rounded-lg" alt="Website design mockup">
+                                    class="w-full h-full object-cover rounded-lg" alt="Website design mockup" loading="lazy" decoding="async" width="800" height="800">
                             </div>
                         </div>
                     </div>
@@ -1048,7 +1057,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/cakehouse.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Cake House">
+                                            class="w-full flex-1 object-cover object-top" alt="Cake House" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1059,7 +1068,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/gamethon.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Gamethon">
+                                            class="w-full flex-1 object-cover object-top" alt="Gamethon" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1070,7 +1079,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/kpss.png"
-                                            class="w-full flex-1 object-cover object-top" alt="KPSS Painting">
+                                            class="w-full flex-1 object-cover object-top" alt="KPSS Painting" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1081,7 +1090,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/letsfame.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Letsfame">
+                                            class="w-full flex-1 object-cover object-top" alt="Letsfame" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1092,7 +1101,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/rmchri.png"
-                                            class="w-full flex-1 object-cover object-top" alt="RMCHRI">
+                                            class="w-full flex-1 object-cover object-top" alt="RMCHRI" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1103,7 +1112,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/yatra.png"
-                                            class="w-full flex-1 object-cover object-top" alt="RIT Yatra 26">
+                                            class="w-full flex-1 object-cover object-top" alt="RIT Yatra 26" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                 </div>
                                 <!-- Duplicated Set for Seamless Loop -->
@@ -1117,7 +1126,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/cakehouse.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Cake House">
+                                            class="w-full flex-1 object-cover object-top" alt="Cake House" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1128,7 +1137,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/gamethon.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Gamethon">
+                                            class="w-full flex-1 object-cover object-top" alt="Gamethon" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1139,7 +1148,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/kpss.png"
-                                            class="w-full flex-1 object-cover object-top" alt="KPSS Painting">
+                                            class="w-full flex-1 object-cover object-top" alt="KPSS Painting" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1150,7 +1159,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/letsfame.png"
-                                            class="w-full flex-1 object-cover object-top" alt="Letsfame">
+                                            class="w-full flex-1 object-cover object-top" alt="Letsfame" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1161,7 +1170,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/rmchri.png"
-                                            class="w-full flex-1 object-cover object-top" alt="RMCHRI">
+                                            class="w-full flex-1 object-cover object-top" alt="RMCHRI" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                     <div
                                         class="w-[320px] h-[360px] bg-white rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-gray-200/60 flex flex-col overflow-hidden shrink-0">
@@ -1172,7 +1181,7 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
                                         </div>
                                         <img src="assets/yatra.png"
-                                            class="w-full flex-1 object-cover object-top" alt="RIT Yatra 26">
+                                            class="w-full flex-1 object-cover object-top" alt="RIT Yatra 26" loading="lazy" decoding="async" width="320" height="360">
                                     </div>
                                 </div>
                             </div>
