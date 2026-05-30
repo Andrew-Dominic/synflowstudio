@@ -1683,7 +1683,7 @@
     </div> <!-- End Statement Brutalism Wrapper -->
 
     <!-- Portfolio Modal Overlay -->
-    <div id="portfolioModal"
+    <div id="portfolioModal" data-lenis-prevent
         class="fixed inset-0 z-[100] bg-base/95 backdrop-blur-sm overflow-y-auto opacity-0 pointer-events-none transition-opacity duration-500">
         <div class="min-h-screen p-6 lg:p-12 relative">
 
@@ -1935,7 +1935,7 @@
             const modal = document.getElementById('portfolioModal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('opacity-100', 'pointer-events-auto');
-            if (typeof lenis !== 'undefined') lenis.stop(); // Stop Lenis scrolling
+            document.body.style.overflow = 'hidden'; // Prevent background native scroll
 
             // Trigger animations inside modal
             gsap.fromTo('.gsap-modal-fade-up',
@@ -1948,7 +1948,7 @@
             const modal = document.getElementById('portfolioModal');
             modal.classList.remove('opacity-100', 'pointer-events-auto');
             modal.classList.add('opacity-0', 'pointer-events-none');
-            if (typeof lenis !== 'undefined') lenis.start(); // Resume Lenis scrolling
+            document.body.style.overflow = ''; // Resume background native scroll
         }
     </script>
 </body>
