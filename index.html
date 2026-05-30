@@ -48,9 +48,10 @@
     </script>
 
     <style>
-        /* Prevent overscroll bounce fighting Lenis */
+        /* Prevent overscroll bounce fighting Lenis, but allow pull-to-refresh */
         html, body {
-            overscroll-behavior: none;
+            overscroll-behavior-y: auto;
+            overscroll-behavior-x: none;
         }
 
         /* Lenis Recommended Styles */
